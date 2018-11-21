@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(variable1.isEmpty() || variable2.isEmpty()){
             showEmptyAlert();
-        }else if(variable2.equals("0") && v.getId() == 2131165221){
+        }else if(variable2.equals("0") && v.getId() == R.id.button4){
             showDivisionAlert();
         }else{
 
