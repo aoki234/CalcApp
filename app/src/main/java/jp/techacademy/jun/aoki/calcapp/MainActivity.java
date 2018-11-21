@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(variable1.isEmpty() || variable2.isEmpty()){
             showEmptyAlert();
         }else if(variable2.equals("0") && v.getId() == 2131165221){
-            showinputAlert();
+            showDivisionAlert();
         }else{
 
             try{
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }catch (NumberFormatException e){
                 Log.d("javatest","can not convert float");
-                showinputAlert();
+                showNumericAlert();
             }
 
         }
@@ -83,11 +83,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
     }
 
-    private void showinputAlert() {
+    private void showDivisionAlert() {
         // AlertDialog.Builderクラスを使ってAlertDialogの準備をする
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Can not calculate this value");
+        alertDialogBuilder.setTitle("Can not calculate in this value");
         alertDialogBuilder.setMessage("Please input correct value");
+
+        // 肯定ボタンに表示される文字列、押したときのリスナーを設定する
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("UI_PARTS", "OK");
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void showNumericAlert() {
+        // AlertDialog.Builderクラスを使ってAlertDialogの準備をする
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Can not input this value");
+        alertDialogBuilder.setMessage("Please input Numeric value");
 
         // 肯定ボタンに表示される文字列、押したときのリスナーを設定する
         alertDialogBuilder.setPositiveButton("OK",
