@@ -40,26 +40,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String variable1 = editText1.getText().toString();
         String variable2 = editText2.getText().toString();
+        //Log.d("javatest",variable2);
+        //Log.d("javatest",String.valueOf(v.getId()));
 
         if(variable1.isEmpty() || variable2.isEmpty()){
-            showAlert();
-        }else {
+            showEmptyAlert();
+        }else if(variable2.equals("0") && v.getId() == 2131165221){
+            showinputAlert();
+        }else{
 
-            Intent intent = new Intent(this, SecondActivity.class);
-            intent.putExtra("VALUE1", Float.parseFloat(variable1));
-            intent.putExtra("VALUE2", Float.parseFloat(variable2));
-            intent.putExtra("VALUE3", String.valueOf(v.getId()));
-            //Log.d("javatest",String.valueOf(v.getId()));
+            try{
+                Intent intent = new Intent(this, SecondActivity.class);
+                intent.putExtra("VALUE1", Float.parseFloat(variable1));
+                intent.putExtra("VALUE2", Float.parseFloat(variable2));
+                intent.putExtra("VALUE3", String.valueOf(v.getId()));
+                //Log.d("javatest",String.valueOf(v.getId()));
 
-            startActivity(intent);
+                startActivity(intent);
+            }catch (NumberFormatException e){
+                Log.d("javatest","can not convert float");
+                showinputAlert();
+            }
+
         }
     }
 
-    private void showAlert() {
+    private void showEmptyAlert() {
         // AlertDialog.Builderクラスを使ってAlertDialogの準備をする
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("variable is empty");
         alertDialogBuilder.setMessage("Please input variable");
+
+        // 肯定ボタンに表示される文字列、押したときのリスナーを設定する
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("UI_PARTS", "OK");
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void showinputAlert() {
+        // AlertDialog.Builderクラスを使ってAlertDialogの準備をする
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Can not calculate this value");
+        alertDialogBuilder.setMessage("Please input correct value");
 
         // 肯定ボタンに表示される文字列、押したときのリスナーを設定する
         alertDialogBuilder.setPositiveButton("OK",
