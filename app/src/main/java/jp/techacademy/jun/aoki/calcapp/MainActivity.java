@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText editText1;
     EditText editText2;
 
+    Float value3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,24 +42,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String variable1 = editText1.getText().toString();
         String variable2 = editText2.getText().toString();
-        //Log.d("javatest",variable2);
-        //Log.d("javatest",String.valueOf(v.getId()));
 
         if(variable1.isEmpty() || variable2.isEmpty()){
             showEmptyAlert();
         }else if(variable2.equals("0") && v.getId() == R.id.button4){
+            //0で割り算した時のエラー
             showDivisionAlert();
         }else{
 
             try{
+                Float value1 = Float.parseFloat(variable1);
+                Float value2 = Float.parseFloat(variable2);
+
+                switch (v.getId()) {
+                    case R.id.button1:
+                        value3 = value1 + value2;
+                        break;
+                    case R.id.button2:
+                        value3 = value1 - value2;
+                        break;
+                    case R.id.button3:
+                        value3 = value1 * value2;
+                        break;
+                    case R.id.button4:
+                        value3 = value1 / value2;
+                        break;
+                    default:
+                        Log.d("javatest","can not calculate");
+                        break;
+                }
+
                 Intent intent = new Intent(this, SecondActivity.class);
-                intent.putExtra("VALUE1", Float.parseFloat(variable1));
-                intent.putExtra("VALUE2", Float.parseFloat(variable2));
-                intent.putExtra("VALUE3", String.valueOf(v.getId()));
-                //Log.d("javatest",String.valueOf(v.getId()));
+                intent.putExtra("VALUE3", String.valueOf(value3));
 
                 startActivity(intent);
+
             }catch (NumberFormatException e){
+                //.入力時のエラーをキャッチ
                 Log.d("javatest","can not convert float");
                 showNumericAlert();
             }
